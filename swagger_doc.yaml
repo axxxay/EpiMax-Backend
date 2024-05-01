@@ -1,0 +1,254 @@
+swagger: '2.0'
+info:
+  title: User API
+  version: '1.0'
+paths:
+  /api/user/register:
+    post:
+      summary: Registers a new user
+      description: Registers a new user.
+      parameters:
+        - in: body
+          name: body
+          description: User object that needs to be registered
+          required: true
+          schema:
+            $ref: '#/definitions/Register'
+      responses:
+        200:
+          description: User created successfully
+          schema:
+            type: object
+            properties:
+              success:
+                type: string
+                id: string
+        400:
+          description: User already exists
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                id: string
+  /api/user/login:
+    post:
+      summary: Logs in a user
+      parameters:
+        - in: body
+          name: body
+          description: User object that needs to be authenticated
+          required: true
+          schema:
+            $ref: '#/definitions/Login'
+      responses:
+        200:
+          description: Successful login
+          schema:
+            type: object
+            properties:
+              jwtToken:
+                type: string
+                example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+  /api/tasks:
+    post:
+      summary: Creates a task
+      description: Creates a task. Only authenticated users can make an API call.
+      parameters:
+        - in: body
+          name: body
+          description: Task object that needs to be created
+          required: true
+          schema:
+            $ref: '#/definitions/Task'
+        - in: header
+          name: Authorization
+          type: string
+          example: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+          description: Bearer JWT token for authentication
+          required: true
+      responses:
+        201:
+          description: Assignment created successfully
+          schema:
+            type: object
+            properties:
+              success:
+                type: string
+                id: string
+              id:
+                type: string
+        403:
+          description: Invalid token
+    get:
+      summary: Get all tasks
+      description: Returns all tasks. Only authenticated users can make an API call.
+      parameters:
+        - in: header
+          name: Authorization
+          type: string
+          example: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+          description: Bearer JWT token for authentication
+          required: true
+      responses:
+        200:
+          description: Successful data fetch
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Tasks'
+        403:
+          description: Invalid token
+  /api/tasks/{id}:
+    get:
+      summary: Get task by ID
+      description: Returns the task by ID. Only authenticated users can make an API call.
+      parameters:
+        - in: path
+          name: id
+          type: string
+          required: true
+          description: Task ID
+        - in: header
+          name: Authorization
+          type: string
+          example: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+          description: Bearer JWT token for authentication
+          required: true
+      responses:
+        200:
+          description: Successful data fetch
+          schema:
+            $ref: '#/definitions/Tasks'
+        403:
+          description: Invalid token
+    put:
+      summary: Update task by ID
+      description: Updates the task by ID. Only authenticated users can make an API call.
+      parameters:
+        - in: path
+          name: id
+          type: string
+          required: true
+          description: Task ID
+        - in: header
+          name: Authorization
+          type: string
+          example: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+          description: Bearer JWT token for authentication
+          required: true
+        - in: body
+          name: body
+          description: Task object that needs to be updated
+          required: true
+          schema:
+            $ref: '#/definitions/Task'
+      responses:
+        200:
+          description: Task updated successfully
+          schema:
+            type: object
+            properties:
+              success:
+                type: string
+        403:
+          description: Invalid token
+    delete:
+      summary: Delete task by ID
+      description: Deletes the task by ID. Only authenticated users can make an API call.
+      parameters:
+        - in: path
+          name: id
+          type: string
+          required: true
+          description: Task ID
+        - in: header
+          name: Authorization
+          type: string
+          example: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+          description: Bearer JWT token for authentication
+          required: true
+      responses:
+        200:
+          description: Task deleted successfully
+          schema:
+            type: object
+            properties:
+              success:
+                type: string
+        403:
+          description: Invalid token
+  /api/docs:
+    get:
+      summary: Get API documentation
+      description: Returns the Swagger UI related to API docs.
+      responses:
+        200:
+          description: A successful response returns the Swagger UI related to API docs.
+          content:
+            text/html:
+              schema:
+                type: string
+                description: HTML content of the Swagger UI.
+definitions:
+  Register:
+    type: object
+    required:
+      - username
+      - email
+      - password
+    properties:
+      username:
+        type: string
+      email:
+        type: string
+      password:
+        type: string
+  Login:
+    type: object
+    required:
+      - username
+      - password
+    properties:
+      username:
+        type: string
+      password:
+        type: string
+  Task:
+    type: object
+    required:
+      - title
+      - description
+      - status
+    properties:
+      title:
+        type: string
+      description:
+        type: string
+      status:
+        type: string
+  Tasks:
+    type: object
+    required:
+      - id
+      - title
+      - description
+      - status
+      - user_id
+      - created_at
+      - updated_at
+    properties:
+      id:
+        type: string
+      title:
+        type: string
+      description:
+        type: string
+      status:
+        type: string
+      user_id:
+        type: string
+      created_at:
+        type: string
+      updated_at:
+        type: string
