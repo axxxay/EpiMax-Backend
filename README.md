@@ -26,7 +26,27 @@ To install EpiMax-Backend, follow these steps:
     ```bash
     npm install
     ```
-4. Deployed App Link [https://EpiMax-Backend.onrender.com](https://EpiMax-Backend.onrender.com)
+4. Deployed App Link [https://epimax-backend-tqfo.onrender.com](https://epimax-backend-tqfo.onrender.com)
+
+## Setting Up Environment Variables
+
+This project uses environment variables for configuration. These are stored in a `.env` file at the root of the project. 
+
+To set up the environment variables:
+
+1. Create a new file in the root directory of the project named `.env`.
+
+2. Open the `.env` file and add your environment variables as key-value pairs. For example:
+
+    ```bash
+    JWT_SECRET=epimax
+    ```
+
+Replace `epimax` with your actual jwt secret, respectively.
+
+3. Save the `.env` file. The application will now use these values when running.
+
+**Note:** Never commit the `.env` file to your repository. It contains sensitive information and should be added to your `.gitignore` file.
 
 ## Running EpiMax-Backend Task
 

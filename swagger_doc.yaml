@@ -90,6 +90,12 @@ paths:
           example: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
           description: Bearer JWT token for authentication
           required: true
+        - in: query
+          name: status
+          type: string
+          description: Task status
+          required: false
+          example: "completed / pending / in progress"
       responses:
         200:
           description: Successful data fetch
