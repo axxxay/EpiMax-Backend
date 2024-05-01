@@ -10,6 +10,9 @@ const swaggerDocument = YAML.load('./swagger_doc.yaml');
 
 app.use(cors());
 
+app.get('/', (req, res) => {
+  res.send('Welcome to the Task Manager API, go to /api/docs to test the APIs using Swagger UI.');
+});
 app.use('/api/user', userRoutes);
 app.use('/api/tasks', taskRoutes);
 app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
